@@ -11,7 +11,7 @@ app.get('/', (req, res) => res.send("Hello Project"))
 
 let users = [
     {id: 1,username: "sinet", password : "123", color: "pink", text: "Hello everyone!"},
-    {id:2,username: "chanry", password : "456", color: "blue", text: "hello! how are you?"},
+    {id:2,username: "chanry", password : "456", color: "cyan", text: "hello! how are you?"},
 
 ]
 

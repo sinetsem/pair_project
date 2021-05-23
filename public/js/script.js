@@ -66,6 +66,7 @@ function buttonLogin(event){
     showElement(colorId,false);
     showElement(containerDiv,false);
     showElement(bg, false);
+    showElement(register,false);
 };
 
 //..............function show and hide element when click on button SingUp...................//
@@ -76,6 +77,7 @@ function buttonSignUp(event){
     showElement(colorId,true);
     showElement(containerDiv,false);
     showElement(bg, false);
+    showElement(user_login,false);
 };
 
 //................function ask user can login or not...................//
@@ -176,6 +178,8 @@ const containerDiv=document.querySelector(".container");
 const userLoginDiv=document.querySelector(".userLogin");
 const colorId=document.querySelector("#color");
 const bg = document.querySelector(".bg");
+const register = document.querySelector(".register");
+const user_login = document.querySelector(".user_login");
 
 //...............button show and hide element..................//
 const loginBtn=document.querySelector(".login");
