@@ -208,4 +208,3 @@ btnsend.addEventListener('click', sendMessage);
 
 
 loadData();
-setInterval('window.location.reload()', 1000);
