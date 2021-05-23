@@ -209,4 +209,4 @@ btnsend.addEventListener('click', sendMessage);
 
 // loadData();
 
-setInterval(loadData(),3000);
+setInterval(loadData(),300);
