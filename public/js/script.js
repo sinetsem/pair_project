@@ -207,4 +207,6 @@ const btnsend = document.querySelector("#send_message");
 btnsend.addEventListener('click', sendMessage);
 
 
-loadData();
+// loadData();
+
+setInterval(loadData(),3000);
