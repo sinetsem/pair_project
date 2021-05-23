@@ -207,6 +207,6 @@ const btnsend = document.querySelector("#send_message");
 btnsend.addEventListener('click', sendMessage);
 
 
-// loadData();
+loadData();
 
-setInterval(loadData(),300);
+setInterval(function(){ location.reload(); }, 1000);
