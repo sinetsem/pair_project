@@ -113,8 +113,8 @@ function Userlogin(response){
 //.............function save user login...............//
 function buttonSave(e){
     e.preventDefault();
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(Userlogin);
     
     
@@ -148,8 +148,8 @@ function UserRegister(response){
 //...........function submit form register................//
 function BtnSubmit(e){
     e.preventDefault();
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(UserRegister);
 
 }
@@ -160,8 +160,8 @@ function sendMessage(e){
     const text = document.querySelector("#textId").value;
     
     User.text = text;
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.post(url, User).then(displayUser);
 
 
@@ -169,8 +169,8 @@ function sendMessage(e){
 
 //.......................load data.............................//
 function loadData(){
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(displayUser);
 }
 
