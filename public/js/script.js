@@ -181,8 +181,8 @@ function Userlogin(response) {
 //.............function save user login...............//
 function buttonSave(e) {
     e.preventDefault();
-    const url = "http://localhost:5000/users";
-    // const url = "https://free-9chat.herokuapp.com/users";
+    // const url = "http://localhost:5000/users";
+    const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(Userlogin).catch(console.log("error"));
 
 
@@ -224,8 +224,8 @@ function UserRegister(response) {
 //...........function submit form register................//
 function BtnSubmit(e) {
     e.preventDefault();
-    const url = "http://localhost:5000/users";
-    // const url = "https://free-9chat.herokuapp.com/users";
+    // const url = "http://localhost:5000/users";
+    const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(UserRegister);
 
 }
@@ -241,8 +241,8 @@ function sendMessage(e) {
     User.text = text;
     User.bold = bold;
     User.italic = italic;
-    const url = "http://localhost:5000/users";
-    // const url = "https://free-9chat.herokuapp.com/users";
+    // const url = "http://localhost:5000/users";
+    const url = "https://free-9chat.herokuapp.com/users";
     axios.post(url, User).then(displayUser);
 
     document.querySelector("#textId"). value="";
@@ -277,8 +277,8 @@ btnsend.addEventListener('click', sendMessage);
 
 //.......................load data.............................//
 function loadData() {
-    const url = "http://localhost:5000/users";
-    // const url = "https://free-9chat.herokuapp.com/users";
+    // const url = "http://localhost:5000/users";
+    const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(displayUser);
 }
 
