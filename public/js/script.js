@@ -1,8 +1,7 @@
 //......................display user on broswer.................................//
 function displayUser(response) {
     let users = response.data;
-    console.log(users)
-    const text = document.querySelector("#textId");
+
     let content = document.querySelector(".content");
     const user_list = document.querySelector(".user-list");
     let count = 0;
@@ -22,7 +21,7 @@ function displayUser(response) {
         const span_text = document.createElement("span");
         if (user.bold === "B" && user.italic === "I") {
             if (users.length - count < 1) {
-                span_text.textContent = user.username + ": " + text.value;
+                span_text.textContent = user.username + ": " + user.text;
             } else {
                 span_text.textContent = user.username + ": " + user.text;
             }
@@ -33,7 +32,8 @@ function displayUser(response) {
         }
         else if (user.bold === "B") {
             if (users.length - count < 1) {
-                span_text.textContent = user.username + ": " + text.value;
+                console.log("text value:",text.value)
+                span_text.textContent = user.username + ": " + user.text;
             } else {
                 span_text.textContent = user.username + ": " + user.text;
             }
@@ -43,7 +43,7 @@ function displayUser(response) {
         }
         else if (user.italic === "I") {
             if (users.length - count < 1) {
-                span_text.textContent = user.username + ": " + text.value;
+                span_text.textContent = user.username + ": " + user.text;
             } else {
                 span_text.textContent = user.username + ": " + user.text;
             }
@@ -81,7 +81,7 @@ function displayUser(response) {
     }
 
     //.................clear value .....................//
-
+    
     bold = "";
     italic = "";
 
@@ -238,6 +238,7 @@ btnsubmit.addEventListener("click", BtnSubmit);
 //.......................send message........................//
 function sendMessage(e) {
     const text = document.querySelector("#textId").value;
+    console.log("message text", text)
     User.text = text;
     User.bold = bold;
     User.italic = italic;
@@ -245,7 +246,7 @@ function sendMessage(e) {
     const url = "https://free-9chat.herokuapp.com/users";
     axios.post(url, User).then(displayUser);
 
-    document.querySelector("#textId"). value="";
+    document.querySelector("#textId").value = "";
     disablebutton();
 
 
@@ -263,7 +264,7 @@ let disablebutton = () => {
 document.addEventListener("keyup",() =>{
     const text_message = document.querySelector("#textId").value;
     if (text_message !== ""){
-        console.log(text_message);
+        
         enablebutton();
 
     }else{
