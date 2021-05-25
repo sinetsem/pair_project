@@ -1,7 +1,7 @@
 //......................display user on broswer.................................//
 function displayUser(response) {
     let users = response.data;
-
+    
     let content = document.querySelector(".content");
     const user_list = document.querySelector(".user-list");
     let count = 0;
@@ -32,7 +32,7 @@ function displayUser(response) {
         }
         else if (user.bold === "B") {
             if (users.length - count < 1) {
-                console.log("text value:",text.value)
+                
                 span_text.textContent = user.username + ": " + user.text;
             } else {
                 span_text.textContent = user.username + ": " + user.text;
@@ -238,7 +238,7 @@ btnsubmit.addEventListener("click", BtnSubmit);
 //.......................send message........................//
 function sendMessage(e) {
     const text = document.querySelector("#textId").value;
-    console.log("message text", text)
+    
     User.text = text;
     User.bold = bold;
     User.italic = italic;
