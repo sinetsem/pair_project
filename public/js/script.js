@@ -1,29 +1,63 @@
 //......................display user on broswer.................................//
-function displayUser(response){
+function displayUser(response) {
     let users = response.data;
     const text = document.querySelector("#textId");
     let content = document.querySelector(".content");
     const user_list = document.querySelector(".user-list");
-    
-    if (user_list!==null){
+    let count = 0;
+    if (user_list !== null) {
         user_list.remove();
     }
     const new_user_list = document.createElement("div");
     new_user_list.classList.add("user-list");
-    for (let user of users){
+    for (let user of users) {
+        count += 1;
 
         //...............create element fieldset for store all spans..................//
         const fieldset = document.createElement("fieldset");
-        
+
 
         //..............create element span for contain name and text message..........//
-        const span_text =document.createElement("span");
-      
-        span_text.textContent = user.username + ": " + user.text;
+        const span_text = document.createElement("span");
+        if (user.bold === "B" && user.italic === "I") {
+            if (users.length - count < 1) {
+                span_text.textContent = user.username + ": " + text.value;
+            } else {
+                span_text.textContent = user.username + ": " + user.text;
+            }
+
+            span_text.style.fontWeight = "bold";
+            span_text.style.fontStyle = "italic";
+
+        }
+        else if (user.bold === "B") {
+            if (users.length - count < 1) {
+                span_text.textContent = user.username + ": " + text.value;
+            } else {
+                span_text.textContent = user.username + ": " + user.text;
+            }
+
+            span_text.style.fontWeight = "bold";
+
+        }
+        else if (user.italic === "I") {
+            if (users.length - count < 1) {
+                span_text.textContent = user.username + ": " + text.value;
+            } else {
+                span_text.textContent = user.username + ": " + user.text;
+            }
+
+            span_text.style.fontStyle = "italic";
+
+        }
+        else {
+            span_text.textContent = user.username + ": " + user.text;
+        }
+       
 
         //.............create element span for contain icon eidt...................//
         const span_edit = document.createElement("span");
-        span_edit.className ="edit fa fa-pencil-square-o hvr-grow";
+        span_edit.className = "edit fa fa-pencil-square-o hvr-grow";
 
         //..............create element span for contain icon delete................//
         const span_delete = document.createElement('span');
@@ -41,103 +75,142 @@ function displayUser(response){
         fieldset.style.backgroundColor = user.color;
         new_user_list.appendChild(fieldset);
         content.appendChild(new_user_list);
+       
+
     }
 
-    //.................clear value from text message.....................//
+    //.................clear value .....................//
     text.value = "";
+    bold = "";
+    italic = "";
+
 
 }
 
-// .....................function show and hide element .........................//
-function showElement(element,isShow){
-    if (isShow){
-      element.style.display="block";
+
+// .....................show and hide element .........................//
+const containerDiv = document.querySelector(".container");
+const userLoginDiv = document.querySelector(".userLogin");
+const colorId = document.querySelector("#color");
+const register = document.querySelector(".register");
+const user_login = document.querySelector(".user_login");
+const loginBtn = document.querySelector(".login");
+
+
+function showElement(element, isShow) {
+    if (isShow) {
+        element.style.display = "block";
     }
-    else{
-      element.style.display="none";
+    else {
+        element.style.display = "none";
     }
 }
 
-//............function show and hide element when click on button Login ....................//
-function buttonLogin(event){
+function buttonSignUp(event) {
     event.preventDefault();
-    showElement(btnsubmit,false)
-    showElement(userLoginDiv,true);
-    showElement(colorId,false);
-    showElement(containerDiv,false);
-    showElement(bg, false);
-    showElement(register,false);
+    showElement(register, true);
+    showElement(saveBtn, false);
+    showElement(btnsubmit, true);
+    showElement(colorId, true);
+    showElement(containerDiv, false);
+    showElement(user_login, false);
+    showElement(loginBtn, false);
+
+
 };
 
-//..............function show and hide element when click on button SingUp...................//
-function buttonSignUp(event){
-    event.preventDefault();
-    showElement(saveBtn,false);
-    showElement(userLoginDiv,true);
-    showElement(colorId,true);
-    showElement(containerDiv,false);
-    showElement(bg, false);
-    showElement(user_login,false);
-};
+function buttonLogout(event){
+    showElement(containerDiv, false);
+    showElement(logOutBtn, false);
+    showElement(signUpBtn, false);
+    showElement(loginBtn, true);
+    showElement(userLoginDiv, true);
+    showElement(user_login, true);
+    showElement(register, false);
+    showElement(colorId, false);
+    showElement(btnsubmit, false);
+    showElement(saveBtn, true);
+   
+
+}
+
+//...............button show and hide element..................//
+const logOutBtn = document.querySelector(".logOut");
+logOutBtn.addEventListener("click",buttonLogout);
+
+//...............button show and hide element..................//
+const signUpBtn = document.querySelector(".sign_up");
+signUpBtn.addEventListener("click", buttonSignUp);
+
 
 //................function ask user can login or not...................//
-function Userlogin(response){
+function Userlogin(response) {
     let users = response.data;
 
     //...............get value from input....................//
-    const input_username= document.querySelector("#username").value;
+    const input_username = document.querySelector("#username").value;
     const input_password = document.querySelector("#password").value;
-    
-    let count = 0;
-    
-    for (let user of users){
-        if (user.username === input_username && user.password === input_password){
+
+    let iscorrect = false;
+
+    for (let user of users) {
+        if (user.username === input_username && user.password === input_password) {
 
             //..........show and hide element................//
-            showElement(containerDiv,true);
-            showElement(userLoginDiv,false);
-            showElement(bg, false)
-            count +=1;
+            showElement(containerDiv, true);
+            showElement(userLoginDiv, false);
+            showElement(signUpBtn, false);
+            showElement(loginBtn, false);
+            showElement(logOutBtn, true);
+
+
+            iscorrect = true;
             //................add value into object............//
             User.username = user.username;
-            User.password= user.password;
-            User.color = user.color;  
+            User.password = user.password;
+            User.color = user.color;
 
         }
     }
-    if (count===0){
+    if (iscorrect===false) {
         confirm("wrong password or username!!")
     }
 }
 
 //.............function save user login...............//
-function buttonSave(e){
+function buttonSave(e) {
     e.preventDefault();
-    const url = "http://localhost:5000/users";
-    // const url = "https://free-9chat.herokuapp.com/users";
-    axios.get(url).then(Userlogin);
-    
-    
+    // const url = "http://localhost:5000/users";
+    const url = "https://free-9chat.herokuapp.com/users";
+    axios.get(url).then(Userlogin).catch(console.log("error"));
+
+
 };
+
+//...............button save user login......................//
+const saveBtn = document.querySelector("#save");
+saveBtn.addEventListener("click", buttonSave);
 
 
 //..............function for user register................//
-function UserRegister(response){
+function UserRegister(response) {
     let users = response.data;
 
     //...............get value from input....................//
-    const input_username= document.querySelector("#username").value;
+    const input_username = document.querySelector("#username").value;
     const input_password = document.querySelector("#password").value;
     const input_color = document.querySelector("#color").value;
 
     //............alert message when input empty...................//
-    if (input_username==="") return confirm("input username cannot empty!!")
-    if (input_password==="") return confirm("input password cannot empty!!")
+    if (input_username === "") return confirm("input username cannot empty!!")
+    if (input_password === "") return confirm("input password cannot empty!!")
 
     //..........show and hide element................//
-    showElement(containerDiv,true);
-    showElement(userLoginDiv,false);
-    showElement(bg, false)
+    showElement(containerDiv, true);
+    showElement(userLoginDiv, false);
+    showElement(signUpBtn, false);
+    showElement(loginBtn, false);
+    showElement(logOutBtn, true);
 
     //..........add value into object...............//
     User.username = input_username;
@@ -145,66 +218,69 @@ function UserRegister(response){
     User.color = input_color;
 }
 
+
+
 //...........function submit form register................//
-function BtnSubmit(e){
+function BtnSubmit(e) {
     e.preventDefault();
-    const url = "http://localhost:5000/users";
-    // const url = "https://free-9chat.herokuapp.com/users";
+    // const url = "http://localhost:5000/users";
+    const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(UserRegister);
 
 }
-
-
-//.......................send message........................//
-function sendMessage(e){
-    const text = document.querySelector("#textId").value;
-    
-    User.text = text;
-    const url = "http://localhost:5000/users";
-    // const url = "https://free-9chat.herokuapp.com/users";
-    axios.post(url, User).then(displayUser);
-
-
-}
-
-//.......................load data.............................//
-function loadData(){
-    const url = "http://localhost:5000/users";
-    // const url = "https://free-9chat.herokuapp.com/users";
-    axios.get(url).then(displayUser);
-}
-
-//.........create empty object for store all value.................//
-let User = {};
-
-
-const containerDiv=document.querySelector(".container");
-const userLoginDiv=document.querySelector(".userLogin");
-const colorId=document.querySelector("#color");
-const bg = document.querySelector(".bg");
-const register = document.querySelector(".register");
-const user_login = document.querySelector(".user_login");
-
-//...............button show and hide element..................//
-const loginBtn=document.querySelector(".login");
-loginBtn.addEventListener("click",buttonLogin);
-
-//...............button show and hide element..................//
-const signUpBtn=document.querySelector(".sign_up");
-signUpBtn.addEventListener("click",buttonSignUp);
-
-//...............button save user login......................//
-const saveBtn=document.querySelector("#save");
-saveBtn.addEventListener("click",buttonSave);
 
 //...............button submit form register.................//
 const btnsubmit = document.querySelector("#submit");
 btnsubmit.addEventListener("click", BtnSubmit);
 
 
+//.......................send message........................//
+function sendMessage(e) {
+    const text = document.querySelector("#textId").value;
+    User.text = text;
+    User.bold = bold;
+    User.italic = italic;
+    // const url = "http://localhost:5000/users";
+    const url = "https://free-9chat.herokuapp.com/users";
+    axios.post(url, User).then(displayUser);
+
+
+}
+
 //...............button send message.........................//
 const btnsend = document.querySelector("#send_message");
 btnsend.addEventListener('click', sendMessage);
 
+//.......................load data.............................//
+function loadData() {
+    // const url = "http://localhost:5000/users";
+    const url = "https://free-9chat.herokuapp.com/users";
+    axios.get(url).then(displayUser);
+}
 
-loadData();
+//.........create empty object for store all value.................//
+let User = {};
+let italic = "";
+let bold = "";
+
+
+//........... text bold..............//
+function covertToBold() {
+    bold = "B";
+}
+ 
+const textBold = document.querySelector("#bold");
+textBold.addEventListener("click", covertToBold);
+
+
+//...............text italic....................//
+function covertToItalic() {
+    italic = "I";
+}
+
+const textItalic = document.querySelector("#italic");
+textItalic.addEventListener("click", covertToItalic);
+
+// loadData();
+setInterval(loadData,1000);
+

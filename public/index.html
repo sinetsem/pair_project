@@ -19,18 +19,16 @@
             <img src="image/logo.png" alt="">
             <h4>FREE-9CHAT</h4>
         </div>
-        
-
-    </div>
-    <div class ="bg">
-        <img src="image/6.jpg" alt="photo">
         <div class="login_menu">
             <button class="login">LOGIN</button>
             <button class="sign_up">SIGN UP</button>
+            <button class = "logOut">LOG OUT</button>
 
         </div>
-    </div>
+        
 
+    </div>
+    
     <div class="cover">
         <div class="userLogin">
             <form>
@@ -39,10 +37,13 @@
 
                 <input type="text" id="username" placeholder="Username"><br>
                 <input type="password" id="password" placeholder="password"><br>
-                <input type="color" id="color"><br>
-                <button id="save">Save</button>
-                <button id = "submit">submit</button>
-                <button id= "cancel">Cancel</button>
+                <input type="color" id="color">
+                <div class = "Button">
+                    <button id="save">Save</button>
+                    <button id = "submit">submit</button>
+                    <button id= "cancel">Cancel</button>
+                </div>
+                
             </form>
         </div>
     
@@ -76,8 +77,8 @@
             </div>
             <div class="message">
                 <div class="b_I">
-                    <span class="fa fa-bold"></span>
-                    <span class="fa fa-italic"></span>
+                    <span class="fa fa-bold" id = "bold"></span>
+                    <span class="fa fa-italic" id = "italic"></span>
                 </div>
     
                 <input type="text" id="textId" placeholder="write message">

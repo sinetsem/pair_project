@@ -5,13 +5,15 @@ body{
     background: url("../image/chat.jpg");
     background-size: cover;
     
-    /* background: rgba(149, 225, 235, 0.61);  */
+    
 }
 .menu{
    
     background: rgba(33, 54, 240, 0.952);
     padding: 10px;
     margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
     
 }
 .logo_menu{
@@ -19,31 +21,26 @@ body{
 }
 
 
-.login_menu{
-    margin-top: -200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    margin-right: 500px;
-}
 
-.login,.sign_up{
-    background: rgb(14, 214, 7);
+
+.login,.sign_up,.logOut{
+    background: rgba(33, 54, 240, 0.952);
     font-size: 20px;
     outline: none;
     border: none;
     padding: 15px;
-    margin-left: 30px;
-    border-radius: 20px;
-    color: white;
+    margin-left: 10px;
     cursor: pointer;
-   
     
 }
+
 .login{
-    width: 120px;
+    color: white;
 }
+.logOut{
+    display:none;
+}
+
 .container{
     
     width: 50%;
@@ -169,62 +166,76 @@ fieldset{
     margin: auto;
     width: 400px;
     padding: 30px;
-    display: none;
 }
 .cover h3{
     text-align: center;
 }
 form{
+    
     border-radius: 10px;
     box-shadow: 0px 0.5px 10px rgb(104, 103, 103);
     background: rgb(5, 122, 126);
     padding: 10px;
-    padding-bottom: 30px;
-    text-align: center;
+    
 }
 
 form input[type="text"],
 input[type="password"],
-input[type="color"],
-form button{
+input[type="color"]{
     width: 300px;
     outline: none;
     border-radius: 5px;
-    margin: 15px;
     padding: 10px;
     border:none;
     box-shadow: 0px 0.5px 10px rgba(51, 51, 51, 0.788);
+    margin-left: 30px;
+    margin-bottom: 30px;
+   
 }
 
 input[type="color"]{
     margin-left: 30px;
     padding: 9px;
+    display:none;
 }
-form button{
+
+.Button button{
+    padding: 10px;
     margin: auto;
     width: 150px;
-    background-color: rgb(24, 121, 4);
-    color:white;
-    margin-left: 6px;
+    border:none;
+    box-shadow: 0px 0.5px 10px rgba(51, 51, 51, 0.788);
+    outline: none;
+    border-radius: 5px;
+    background: green;
+    color: white;
 
+}
+
+
+.Button {
+    display: flex;
+    margin: auto;
+    margin-bottom: 30px;
 }
 #cancel{
     background: rgb(177, 4, 4);
     cursor: pointer;
+    margin-left: -13px;
+    
 }
 #save{
     cursor: pointer;
+    margin-left: 28px;
+  
+} 
+
+
+.register{
+    display:none;
 }
-
-.bg{
-
-    margin-top: -30px;
-
+#submit{
+    display: none;
+    margin-left: 28px;
 }
-.bg img {
-    width: 100%;
-    height: 600px;
-}
-
-
 

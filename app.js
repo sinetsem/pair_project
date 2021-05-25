@@ -10,8 +10,8 @@ app.use(express.static('public'));
 app.get('/', (req, res) => res.send("Hello Project"))
 
 let users = [
-    {id: 1,username: "sinet", password : "123", color: "pink", text: "Hello everyone!"},
-    {id:2,username: "chanry", password : "456", color: "cyan", text: "hello! how are you?"},
+    {id: 1,username: "sinet", password : "123", color: "pink", text: "Hello everyone!", bold: "", italic:""},
+    {id:2,username: "chanry", password : "456", color: "cyan", text: "hello! how are you?",bold: "", italic:""},
 
 ]
 
@@ -20,13 +20,17 @@ app.get('/users', (req , res) =>{
 })
 
 app.post('/users', (req, res) =>{
-    let username = req.body.username;
+    let username =req.body.username;
     let text = req.body.text;
     let color = req.body.color;
     let password = req.body.password;
     let id= users.length+1;
+    let bold = req.body.bold;
+    let italic = req.body.italic;
+    
    
-    let userlist = {id:id,username:username ,password: password,text:text, color: color};
+    let userlist = {id,username ,password,text, color,bold, italic};
+   
     users.push(userlist);
     res.send(users);
 
