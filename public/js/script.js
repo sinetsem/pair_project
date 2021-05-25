@@ -1,6 +1,7 @@
 //......................display user on broswer.................................//
 function displayUser(response) {
     let users = response.data;
+    console.log(users)
     const text = document.querySelector("#textId");
     let content = document.querySelector(".content");
     const user_list = document.querySelector(".user-list");
@@ -80,7 +81,7 @@ function displayUser(response) {
     }
 
     //.................clear value .....................//
-    text.value = "";
+
     bold = "";
     italic = "";
 
@@ -180,8 +181,8 @@ function Userlogin(response) {
 //.............function save user login...............//
 function buttonSave(e) {
     e.preventDefault();
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(Userlogin).catch(console.log("error"));
 
 
@@ -223,8 +224,8 @@ function UserRegister(response) {
 //...........function submit form register................//
 function BtnSubmit(e) {
     e.preventDefault();
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(UserRegister);
 
 }
@@ -240,12 +241,35 @@ function sendMessage(e) {
     User.text = text;
     User.bold = bold;
     User.italic = italic;
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.post(url, User).then(displayUser);
+
+    document.querySelector("#textId"). value="";
+    disablebutton();
 
 
 }
+
+let enablebutton = () =>{
+    btnsend.removeAttribute("disabled");
+}
+
+
+let disablebutton = () => {
+    btnsend.setAttribute("disabled" , "");
+};
+
+document.addEventListener("keyup",() =>{
+    const text_message = document.querySelector("#textId").value;
+    if (text_message !== ""){
+        console.log(text_message);
+        enablebutton();
+
+    }else{
+        disablebutton();
+    }
+})
 
 //...............button send message.........................//
 const btnsend = document.querySelector("#send_message");
@@ -253,8 +277,8 @@ btnsend.addEventListener('click', sendMessage);
 
 //.......................load data.............................//
 function loadData() {
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(displayUser);
 }
 
@@ -267,6 +291,7 @@ let bold = "";
 //........... text bold..............//
 function covertToBold() {
     bold = "B";
+    
 }
  
 const textBold = document.querySelector("#bold");
@@ -282,5 +307,5 @@ const textItalic = document.querySelector("#italic");
 textItalic.addEventListener("click", covertToItalic);
 
 // loadData();
-setInterval(loadData,1000);
+setInterval(loadData,5000);
 
