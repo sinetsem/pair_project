@@ -50,6 +50,7 @@ function displayUser(response) {
         //..............create element span for contain icon delete................//
         const span_delete = document.createElement('span');
         span_delete.className = "fa fa-trash ";
+        
 
         //.............create element span for contain icon quote.................//
         const span_quote = document.createElement('span');
@@ -168,8 +169,8 @@ function Userlogin(response) {
 //.............function save user login...............//
 function buttonSave(e) {
     e.preventDefault();
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(Userlogin).catch(console.log("error"));
 
 
@@ -211,8 +212,8 @@ function UserRegister(response) {
 //...........function submit form register................//
 function BtnSubmit(e) {
     e.preventDefault();
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(UserRegister);
 
 }
@@ -224,13 +225,15 @@ btnsubmit.addEventListener("click", BtnSubmit);
 
 //.......................send message........................//
 function sendMessage(e) {
+    var x = document.getElementById("myAudio");
+    x.play();
     const text = document.querySelector("#textId").value;
     
     User.text = text;
     User.bold = bold;
     User.italic = italic;
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.post(url, User).then(displayUser);
 
     document.querySelector("#textId").value = "";
@@ -265,8 +268,8 @@ btnsend.addEventListener('click', sendMessage);
 
 //.......................load data.............................//
 function loadData() {
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(displayUser);
 }
 
@@ -294,17 +297,12 @@ function covertToItalic() {
 const textItalic = document.querySelector("#italic");
 textItalic.addEventListener("click", covertToItalic);
 
-function removeItem(event){
-    let className = event.target.className;
-    console.log("win");
-    console.log(className);
-    if (className === "fa fa-trash"){
-        console.log(className);
-    }
-}
 
-const getUserList = document.querySelector("fieldset");
-getUserList.addEventListener("click", removeItem);
+
+    
+
+
+
 
 
 
