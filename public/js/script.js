@@ -4,14 +4,14 @@ function displayUser(response) {
     
     let content = document.querySelector(".content");
     const user_list = document.querySelector(".user-list");
-    let count = 0;
+   
     if (user_list !== null) {
         user_list.remove();
     }
     const new_user_list = document.createElement("div");
     new_user_list.classList.add("user-list");
     for (let user of users) {
-        count += 1;
+      
 
         //...............create element fieldset for store all spans..................//
         const fieldset = document.createElement("fieldset");
@@ -20,34 +20,21 @@ function displayUser(response) {
         //..............create element span for contain name and text message..........//
         const span_text = document.createElement("span");
         if (user.bold === "B" && user.italic === "I") {
-            if (users.length - count < 1) {
-                span_text.textContent = user.username + ": " + user.text;
-            } else {
-                span_text.textContent = user.username + ": " + user.text;
-            }
-
+            
+            span_text.textContent = user.username + ": " + user.text;
             span_text.style.fontWeight = "bold";
             span_text.style.fontStyle = "italic";
 
         }
         else if (user.bold === "B") {
-            if (users.length - count < 1) {
-                
-                span_text.textContent = user.username + ": " + user.text;
-            } else {
-                span_text.textContent = user.username + ": " + user.text;
-            }
-
+            
+            span_text.textContent = user.username + ": " + user.text;
             span_text.style.fontWeight = "bold";
 
         }
         else if (user.italic === "I") {
-            if (users.length - count < 1) {
-                span_text.textContent = user.username + ": " + user.text;
-            } else {
-                span_text.textContent = user.username + ": " + user.text;
-            }
-
+            
+            span_text.textContent = user.username + ": " + user.text;
             span_text.style.fontStyle = "italic";
 
         }
@@ -58,15 +45,15 @@ function displayUser(response) {
 
         //.............create element span for contain icon eidt...................//
         const span_edit = document.createElement("span");
-        span_edit.className = "edit fa fa-pencil-square-o hvr-grow";
+        span_edit.className = "fa fa-pencil-square-o ";
 
         //..............create element span for contain icon delete................//
         const span_delete = document.createElement('span');
-        span_delete.className = "delete fa fa-trash hvr-grow";
+        span_delete.className = "fa fa-trash ";
 
         //.............create element span for contain icon quote.................//
         const span_quote = document.createElement('span');
-        span_quote.className = "quote-left fa fa-quote-left hvr-grow";
+        span_quote.className = "fa fa-quote-left ";
 
         //................append all spans into the fieldset................//
         fieldset.appendChild(span_text);
@@ -307,6 +294,19 @@ function covertToItalic() {
 const textItalic = document.querySelector("#italic");
 textItalic.addEventListener("click", covertToItalic);
 
-// loadData();
+function removeItem(event){
+    let className = event.target.className;
+    console.log("win");
+    console.log(className);
+    if (className === "fa fa-trash"){
+        console.log(className);
+    }
+}
+
+const getUserList = document.querySelector("fieldset");
+getUserList.addEventListener("click", removeItem);
+
+
+
 setInterval(loadData,5000);
 
