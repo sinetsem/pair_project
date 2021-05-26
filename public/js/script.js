@@ -73,6 +73,9 @@ function displayUser(response) {
     bold = "";
     italic = "";
 
+    const x = document.getElementById("myAudio");
+    x.play();
+
 
 }
 
@@ -225,8 +228,7 @@ btnsubmit.addEventListener("click", BtnSubmit);
 
 //.......................send message........................//
 function sendMessage(e) {
-    const x = document.getElementById("myAudio");
-    x.play();
+    
     const text = document.querySelector("#textId").value;
     
     User.text = text;
