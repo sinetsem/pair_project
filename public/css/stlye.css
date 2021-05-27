@@ -135,13 +135,16 @@ h5{
     border: none;
 }
 
+.list{
+    margin-top: 15px;
+}
+
 fieldset{
     
     border: 1px solid rgb(248, 128, 128);
     max-width:max-content;
     border-radius: 20px;
     padding: 10px;
-    margin-top: 15px;
     display: flex;
    
     
@@ -237,5 +240,11 @@ input[type="color"]{
 #submit{
     display: none;
     margin-left: 28px;
+}
+
+.time {
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 20px;
 }
 

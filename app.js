@@ -1,5 +1,11 @@
+
+let fs=require("fs");
+
 const express = require('express');
 const app = express();
+const DATA_FILE = "data.json";
+
+
 
 app.listen(process.env.PORT || 5000, () => console.log("Server running..."));
 
@@ -7,33 +13,34 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.static('public'));
 
-app.get('/', (req, res) => res.send("Hello Project"))
+
 
 let users = [
-    {id: 1,username: "sinet", password : "123", color: "pink", text: "Hello everyone!", bold: "", italic:""},
-    {id:2,username: "chanry", password : "456", color: "cyan", text: "hello! how are you?",bold: "", italic:""},
+    {username: "sinet", password : "123", color: "pink", text: "Hello everyone!", time: "5/19/2021-10:00AM",bold: "", italic:"", id: 1},
+    {username: "chanry", password : "456", color: "cyan", text: "hello! how are you?", time: "5/19/2021-10:01AM", bold: "", italic:"", id: 2},
 
 ]
 
+
+
 app.get('/users', (req , res) =>{
+  
+    users= JSON.parse(fs.readFileSync("data.json"));
     res.send(users);
 })
 
 app.post('/users', (req, res) =>{
-    let username =req.body.username;
-    let text = req.body.text;
-    let color = req.body.color;
-    let password = req.body.password;
-    let id= users.length+1;
-    let bold = req.body.bold;
-    let italic = req.body.italic;
     
-   
-    let userlist = {id,username ,password,text, color,bold, italic};
-   
+    let id= users.length+1;
+    let userlist = req.body;
+    userlist.id = id;
     users.push(userlist);
+    fs.writeFileSync("data.json" ,JSON.stringify( users));
     res.send(users);
+  
 
-})
+});
+
+
 
 

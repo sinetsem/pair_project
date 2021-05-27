@@ -1,7 +1,7 @@
 //......................display user on broswer.................................//
 function displayUser(response) {
     let users = response.data;
-    
+    console.log(users);
     let content = document.querySelector(".content");
     const user_list = document.querySelector(".user-list");
    
@@ -11,11 +11,17 @@ function displayUser(response) {
     const new_user_list = document.createElement("div");
     new_user_list.classList.add("user-list");
     for (let user of users) {
-      
+
+        //............... create div element for contain fieldset and time................//
+        const div = document.createElement("div");
+        div.className = "list";
 
         //...............create element fieldset for store all spans..................//
         const fieldset = document.createElement("fieldset");
 
+        //...............create span for contain time.................//
+        const span_time = document.createElement("span");
+        span_time.className = "time";
 
         //..............create element span for contain name and text message..........//
         const span_text = document.createElement("span");
@@ -25,21 +31,26 @@ function displayUser(response) {
             span_text.style.fontWeight = "bold";
             span_text.style.fontStyle = "italic";
 
+            span_time.textContent = user.time;
+
         }
         else if (user.bold === "B") {
             
             span_text.textContent = user.username + ": " + user.text;
             span_text.style.fontWeight = "bold";
+            span_time.textContent = user.time;
 
         }
         else if (user.italic === "I") {
             
             span_text.textContent = user.username + ": " + user.text;
             span_text.style.fontStyle = "italic";
+            span_time.textContent = user.time;
 
         }
         else {
             span_text.textContent = user.username + ": " + user.text;
+            span_time.textContent = user.time;
         }
        
 
@@ -62,7 +73,10 @@ function displayUser(response) {
         fieldset.appendChild(span_delete);
         fieldset.appendChild(span_quote);
         fieldset.style.backgroundColor = user.color;
-        new_user_list.appendChild(fieldset);
+
+        div.appendChild(span_time);
+        div.appendChild(fieldset);
+        new_user_list.appendChild(div);
         content.appendChild(new_user_list);
        
 
@@ -72,9 +86,6 @@ function displayUser(response) {
     
     bold = "";
     italic = "";
-
-    const x = document.getElementById("myAudio");
-    x.play();
 
 
 }
@@ -162,6 +173,8 @@ function Userlogin(response) {
             User.password = user.password;
             User.color = user.color;
 
+           
+
         }
     }
     if (iscorrect===false) {
@@ -172,8 +185,8 @@ function Userlogin(response) {
 //.............function save user login...............//
 function buttonSave(e) {
     e.preventDefault();
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(Userlogin).catch(console.log("error"));
 
 
@@ -208,6 +221,11 @@ function UserRegister(response) {
     User.username = input_username;
     User.password = input_password;
     User.color = input_color;
+
+
+   
+
+    
 }
 
 
@@ -215,8 +233,8 @@ function UserRegister(response) {
 //...........function submit form register................//
 function BtnSubmit(e) {
     e.preventDefault();
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(UserRegister);
 
 }
@@ -228,14 +246,32 @@ btnsubmit.addEventListener("click", BtnSubmit);
 
 //.......................send message........................//
 function sendMessage(e) {
-    
+
     const text = document.querySelector("#textId").value;
-    
+    //.................audio...................//
+    const x = document.getElementById("myAudio");
+    x.play();
+    //.................data and time....................//
+    let d = new Date();
+    let ampm = "";
+    let time = "";
+    if (d.getHours() >=12 ){
+        ampm = "PM";
+
+    }else{
+        ampm = "AM";
+    };
+
+    time = d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear() + "-" + d.getHours() + ":" + d.getMinutes()+ ampm;
+
     User.text = text;
+    User.time = time;
     User.bold = bold;
     User.italic = italic;
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+
+
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.post(url, User).then(displayUser);
 
     document.querySelector("#textId").value = "";
@@ -270,8 +306,8 @@ btnsend.addEventListener('click', sendMessage);
 
 //.......................load data.............................//
 function loadData() {
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(displayUser);
 }
 
@@ -298,8 +334,6 @@ function covertToItalic() {
 
 const textItalic = document.querySelector("#italic");
 textItalic.addEventListener("click", covertToItalic);
-
-
 
 
 setInterval(loadData,5000);
