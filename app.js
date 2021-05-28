@@ -1,11 +1,8 @@
 
 let fs=require("fs");
-
 const express = require('express');
+
 const app = express();
-const DATA_FILE = "data.json";
-
-
 
 app.listen(process.env.PORT || 5000, () => console.log("Server running..."));
 
@@ -35,11 +32,42 @@ app.post('/users', (req, res) =>{
     let userlist = req.body;
     userlist.id = id;
     users.push(userlist);
-    fs.writeFileSync("data.json" ,JSON.stringify( users));
+    fs.writeFileSync("data.json" ,JSON.stringify(users));
     res.send(users);
   
 
 });
+
+app.delete("/users/:id", (req,res) =>{
+    
+    let id = req.params.id;
+    
+    for (let index in users){
+        let userId = users[index].id;
+        if (userId === parseInt(id)){
+            users.splice(index,1);
+            fs.writeFileSync("data.json" ,JSON.stringify(users));
+            res.send(users);
+        }
+    }
+   
+});
+
+app.put("/users/:id", (req , res) => {
+    let id = req.params.id;
+    let text = req.body.text;
+ 
+    for (let index in users){
+        let userId = users[index].id;
+        if (userId === parseInt(id)){
+            users[index].text = text;
+            fs.writeFileSync("data.json" ,JSON.stringify(users));
+            res.send(users);
+        }
+    }
+
+})
+
 
 
 

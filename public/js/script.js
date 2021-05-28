@@ -1,7 +1,8 @@
+
 //......................display user on broswer.................................//
 function displayUser(response) {
     let users = response.data;
-    console.log(users);
+    
     let content = document.querySelector(".content");
     const user_list = document.querySelector(".user-list");
    
@@ -15,6 +16,7 @@ function displayUser(response) {
         //............... create div element for contain fieldset and time................//
         const div = document.createElement("div");
         div.className = "list";
+        
 
         //...............create element fieldset for store all spans..................//
         const fieldset = document.createElement("fieldset");
@@ -57,10 +59,19 @@ function displayUser(response) {
         //.............create element span for contain icon eidt...................//
         const span_edit = document.createElement("span");
         span_edit.className = "fa fa-pencil-square-o ";
+        span_edit.addEventListener("click", function(){
+            id = user.id;
+            let text = user.text;
+            getText(text);
+        });
 
         //..............create element span for contain icon delete................//
         const span_delete = document.createElement('span');
         span_delete.className = "fa fa-trash ";
+        span_delete.addEventListener("click", function(){
+            let idDelete = user.id;
+            deleteMessage(idDelete);
+        });
         
 
         //.............create element span for contain icon quote.................//
@@ -83,15 +94,52 @@ function displayUser(response) {
     }
 
     //.................clear value .....................//
-    
     bold = "";
     italic = "";
+    
 
 
 }
 
+let id = 0;
+//.............get text when click on button update ....................//
+function getText(message){
+    showElement(btnupdate,true);
+    showElement(btnsend,false)
+    const text = document.querySelector("#textId");
+    text.value= message;
+    
+}
+
+//...............update message......................//
+function updateMessage(){
+    const text = document.querySelector("#textId").value;
+    
+    const url = "http://localhost:5000/users/"+id;
+   
+    axios.put(url,{text: text}).then(displayUser);
+
+    showElement(btnupdate, false);
+    showElement(btnsend, true);
+    
+
+}
+
+//...................button update.....................//
+const btnupdate = document.querySelector("#update_message");
+btnupdate.addEventListener("click", updateMessage);
+
+
+//................delete message...................//
+function deleteMessage(id) {
+    
+    const url = "http://localhost:5000/users/"+ id;
+    axios.delete(url).then(displayUser);
+}
+
 
 // .....................show and hide element .........................//
+
 const containerDiv = document.querySelector(".container");
 const userLoginDiv = document.querySelector(".userLogin");
 const colorId = document.querySelector("#color");
@@ -111,6 +159,7 @@ function showElement(element, isShow) {
 
 function buttonSignUp(event) {
     event.preventDefault();
+    showElement(btnupdate, false);
     showElement(register, true);
     showElement(saveBtn, false);
     showElement(btnsubmit, true);
@@ -165,6 +214,7 @@ function Userlogin(response) {
             showElement(signUpBtn, false);
             showElement(loginBtn, false);
             showElement(logOutBtn, true);
+            showElement(btnupdate, false)
 
 
             iscorrect = true;
@@ -185,8 +235,8 @@ function Userlogin(response) {
 //.............function save user login...............//
 function buttonSave(e) {
     e.preventDefault();
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(Userlogin).catch(console.log("error"));
 
 
@@ -233,8 +283,8 @@ function UserRegister(response) {
 //...........function submit form register................//
 function BtnSubmit(e) {
     e.preventDefault();
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(UserRegister);
 
 }
@@ -270,8 +320,8 @@ function sendMessage(e) {
     User.italic = italic;
 
 
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.post(url, User).then(displayUser);
 
     document.querySelector("#textId").value = "";
@@ -306,8 +356,8 @@ btnsend.addEventListener('click', sendMessage);
 
 //.......................load data.............................//
 function loadData() {
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(displayUser);
 }
 
@@ -320,6 +370,7 @@ let bold = "";
 //........... text bold..............//
 function covertToBold() {
     bold = "B";
+    console.log(bold)
     
 }
  
@@ -330,11 +381,12 @@ textBold.addEventListener("click", covertToBold);
 //...............text italic....................//
 function covertToItalic() {
     italic = "I";
+    console.log(italic)
 }
 
 const textItalic = document.querySelector("#italic");
 textItalic.addEventListener("click", covertToItalic);
 
 
-setInterval(loadData,5000);
+setInterval(loadData,3000);
 
