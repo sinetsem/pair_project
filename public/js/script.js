@@ -116,7 +116,7 @@ function updateMessage(){
     const text = document.querySelector("#textId").value;
     
     // const url = "http://localhost:5000/users/"+id;
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "https://free-9chat.herokuapp.com/users/id";
    
     axios.put(url,{text: text}).then(displayUser);
 
@@ -133,7 +133,7 @@ btnupdate.addEventListener("click", updateMessage);
 
 //................delete message...................//
 function deleteMessage(id) {
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "https://free-9chat.herokuapp.com/users/id";
     // const url = "http://localhost:5000/users/"+ id;
     axios.delete(url).then(displayUser);
 }
