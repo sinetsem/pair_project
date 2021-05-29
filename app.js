@@ -13,8 +13,8 @@ app.use(express.static('public'));
 
 
 let users = [
-    {username: "sinet", password : "123", color: "pink", text: "Hello everyone!", time: "5/19/2021-10:00AM",bold: "", italic:"", id: 1},
-    {username: "chanry", password : "456", color: "cyan", text: "hello! how are you?", time: "5/19/2021-10:01AM", bold: "", italic:"", id: 2},
+    {username: "sinet", password : "123", sex: "Female", color: "pink", text: "Hello everyone!", time: "5/19/2021-10:00AM",bold: "", italic:"", id: 1},
+    {username: "chanry", password : "456", sex: "Female", color: "cyan", text: "hello! how are you?", time: "5/19/2021-10:01AM", bold: "", italic:"", id: 2},
 
 ]
 
@@ -39,7 +39,7 @@ app.post('/users', (req, res) =>{
 });
 
 app.delete("/users/:id", (req,res) =>{
-    
+     
     let id = req.params.id;
     
     for (let index in users){

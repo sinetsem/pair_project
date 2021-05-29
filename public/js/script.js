@@ -27,6 +27,17 @@ function displayUser(response) {
 
         //..............create element span for contain name and text message..........//
         const span_text = document.createElement("span");
+        span_text.className="textMessage";
+
+        const span_img = document.createElement("span");
+        const img = document.createElement("img");
+        if (user.sex === "Female"){
+            img.src = "../image/female.jpg";
+         
+        }
+        if (user.sex === "Male"){
+            img.src = "../image/male.jpg";
+        }
         if (user.bold === "B" && user.italic === "I") {
             
             span_text.textContent = user.username + ": " + user.text;
@@ -79,6 +90,8 @@ function displayUser(response) {
         span_quote.className = "fa fa-quote-left ";
 
         //................append all spans into the fieldset................//
+        img.appendChild(span_img);
+        fieldset.appendChild(img);
         fieldset.appendChild(span_text);
         fieldset.appendChild(span_edit);
         fieldset.appendChild(span_delete);
@@ -140,7 +153,7 @@ function deleteMessage(id) {
 
 
 // .....................show and hide element .........................//
-
+const sex = document.querySelector("#sex");
 const containerDiv = document.querySelector(".container");
 const userLoginDiv = document.querySelector(".userLogin");
 const colorId = document.querySelector("#color");
@@ -160,6 +173,7 @@ function showElement(element, isShow) {
 
 function buttonSignUp(event) {
     event.preventDefault();
+    showElement(sex,true);
     showElement(btnupdate, false);
     showElement(register, true);
     showElement(saveBtn, false);
@@ -173,6 +187,7 @@ function buttonSignUp(event) {
 };
 
 function buttonLogout(event){
+    showElement(sex, false);
     showElement(containerDiv, false);
     showElement(logOutBtn, false);
     showElement(signUpBtn, false);
@@ -199,7 +214,7 @@ signUpBtn.addEventListener("click", buttonSignUp);
 //................function ask user can login or not...................//
 function Userlogin(response) {
     let users = response.data;
-
+ 
     //...............get value from input....................//
     const input_username = document.querySelector("#username").value;
     const input_password = document.querySelector("#password").value;
@@ -223,6 +238,7 @@ function Userlogin(response) {
             User.username = user.username;
             User.password = user.password;
             User.color = user.color;
+            User.sex = user.sex;
 
            
 
@@ -267,6 +283,13 @@ function UserRegister(response) {
     showElement(signUpBtn, false);
     showElement(loginBtn, false);
     showElement(logOutBtn, true);
+
+    let inputRadio = document.querySelectorAll("input[name=genderSelect]");
+    for (let radio of inputRadio){
+        if (radio.checked){
+            User.sex = radio.value;
+        }
+    }
 
     //..........add value into object...............//
     User.username = input_username;
@@ -319,7 +342,7 @@ function sendMessage(e) {
     User.time = time;
     User.bold = bold;
     User.italic = italic;
-
+    console.log(User)
 
     // const url = "http://localhost:5000/users";
     const url = "https://free-9chat.herokuapp.com/users";
@@ -371,7 +394,6 @@ let bold = "";
 //........... text bold..............//
 function covertToBold() {
     bold = "B";
-    console.log(bold)
     
 }
  
@@ -382,7 +404,7 @@ textBold.addEventListener("click", covertToBold);
 //...............text italic....................//
 function covertToItalic() {
     italic = "I";
-    console.log(italic)
+    
 }
 
 const textItalic = document.querySelector("#italic");
