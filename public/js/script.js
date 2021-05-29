@@ -33,8 +33,6 @@ function displayUser(response) {
         const span_img = document.createElement("span");
         const img = document.createElement("img");
 
-        const div_online = document.createElement("div");
-        div_online.className = "online";
         if (user.sex === "Female"){
             img.src = "../image/female.jpg";
          
@@ -43,12 +41,6 @@ function displayUser(response) {
             img.src = "../image/male.jpg";
         }
 
-        if (user.username === getuser && user.password === getpassword){
-            div_online.style.backgroundColor= "green";
-        }
-        else{
-            div_online.style.backgroundColor= "red";
-        }
         if (user.bold === "B" && user.italic === "I") {
             
             span_text.textContent = user.username + ": " + user.text;
@@ -116,17 +108,11 @@ function displayUser(response) {
             
         });
         
-        //.............create element span for contain icon quote.................//
-        const span_quote = document.createElement('span');
-        span_quote.className = "fa fa-quote-left ";
-
         img.appendChild(span_img);
         fieldset.appendChild(img);
-        fieldset.appendChild(div_online);
         fieldset.appendChild(span_text);
         fieldset.appendChild(span_edit);
         fieldset.appendChild(span_delete);
-        fieldset.appendChild(span_quote);
         fieldset.style.backgroundColor = user.color;
         div.appendChild(span_time);
         div.appendChild(fieldset);
@@ -158,8 +144,8 @@ function getText(message){
 function updateMessage(){
     const text = document.querySelector("#textId").value;
     
-    // const url = "http://localhost:5000/users/"+id;
-    const url = "https://free-9chat.herokuapp.com/users/"+id;
+    const url = "http://localhost:5000/users/"+id;
+    // const url = "https://free-9chat.herokuapp.com/users/"+id;
    
     axios.put(url,{text: text}).then(displayUser);
 
@@ -174,8 +160,8 @@ btnupdate.addEventListener("click", updateMessage);
 
 //................delete message...................//
 function deleteMessage(id) {
-    const url = "https://free-9chat.herokuapp.com/users/" + id;
-    // const url = "http://localhost:5000/users/"+ id;
+    // const url = "https://free-9chat.herokuapp.com/users/" + id;
+    const url = "http://localhost:5000/users/"+ id;
     axios.delete(url).then(displayUser);
 }
 
@@ -270,8 +256,8 @@ function Userlogin(response) {
 //.............function save user login...............//
 function buttonSave(e) {
     e.preventDefault();
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url)
     .then(Userlogin)
     .catch(function(error) {
@@ -347,8 +333,8 @@ function sendMessage(e) {
     User.bold = bold;
     User.italic = italic;
   
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.post(url, User).then(displayUser);
 
     document.querySelector("#textId").value = "";
@@ -367,7 +353,7 @@ let disablebutton = () => {
 document.addEventListener("keyup",() =>{
     const text_message = document.querySelector("#textId").value;
     if (text_message !== ""){
-        
+ 
         enablebutton();
 
     }else{
@@ -381,8 +367,8 @@ btnsend.addEventListener('click', sendMessage);
 
 //.......................load data.............................//
 function loadData() {
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(displayUser);
 }
 
