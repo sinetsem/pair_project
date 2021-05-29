@@ -144,8 +144,8 @@ function getText(message){
 function updateMessage(){
     const text = document.querySelector("#textId").value;
     
-    const url = "http://localhost:5000/users/"+id;
-    // const url = "https://free-9chat.herokuapp.com/users/"+id;
+    // const url = "http://localhost:5000/users/"+id;
+    const url = "https://free-9chat.herokuapp.com/users/"+id;
    
     axios.put(url,{text: text}).then(displayUser);
 
@@ -160,8 +160,8 @@ btnupdate.addEventListener("click", updateMessage);
 
 //................delete message...................//
 function deleteMessage(id) {
-    // const url = "https://free-9chat.herokuapp.com/users/" + id;
-    const url = "http://localhost:5000/users/"+ id;
+    const url = "https://free-9chat.herokuapp.com/users/" + id;
+    // const url = "http://localhost:5000/users/"+ id;
     axios.delete(url).then(displayUser);
 }
 
@@ -256,8 +256,8 @@ function Userlogin(response) {
 //.............function save user login...............//
 function buttonSave(e) {
     e.preventDefault();
-    const url = "http://localhost:5000/users";
-    // const url = "https://free-9chat.herokuapp.com/users";
+    // const url = "http://localhost:5000/users";
+    const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url)
     .then(Userlogin)
     .catch(function(error) {
@@ -333,8 +333,8 @@ function sendMessage(e) {
     User.bold = bold;
     User.italic = italic;
   
-    const url = "http://localhost:5000/users";
-    // const url = "https://free-9chat.herokuapp.com/users";
+    // const url = "http://localhost:5000/users";
+    const url = "https://free-9chat.herokuapp.com/users";
     axios.post(url, User).then(displayUser);
 
     document.querySelector("#textId").value = "";
@@ -367,8 +367,8 @@ btnsend.addEventListener('click', sendMessage);
 
 //.......................load data.............................//
 function loadData() {
-    const url = "http://localhost:5000/users";
-    // const url = "https://free-9chat.herokuapp.com/users";
+    // const url = "http://localhost:5000/users";
+    const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(displayUser);
 }
 
