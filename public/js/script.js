@@ -2,7 +2,8 @@
 //......................display user on broswer.................................//
 function displayUser(response) {
     let users = response.data;
-    
+    const getuser =  localStorage.getItem("username");
+    const getpassword = localStorage.getItem("password");
     let content = document.querySelector(".content");
     const user_list = document.querySelector(".user-list");
    
@@ -12,7 +13,7 @@ function displayUser(response) {
     const new_user_list = document.createElement("div");
     new_user_list.classList.add("user-list");
     for (let user of users) {
-
+       
         //............... create div element for contain fieldset and time................//
         const div = document.createElement("div");
         div.className = "list";
@@ -31,12 +32,22 @@ function displayUser(response) {
 
         const span_img = document.createElement("span");
         const img = document.createElement("img");
+
+        const div_online = document.createElement("div");
+        div_online.className = "online";
         if (user.sex === "Female"){
             img.src = "../image/female.jpg";
          
         }
-        if (user.sex === "Male"){
+        else{
             img.src = "../image/male.jpg";
+        }
+
+        if (user.username === getuser && user.password === getpassword){
+            div_online.style.backgroundColor= "green";
+        }
+        else{
+            div_online.style.backgroundColor= "red";
         }
         if (user.bold === "B" && user.italic === "I") {
             
@@ -66,54 +77,73 @@ function displayUser(response) {
             span_time.textContent = user.time;
         }
        
-
         //.............create element span for contain icon eidt...................//
         const span_edit = document.createElement("span");
         span_edit.className = "fa fa-pencil-square-o ";
         span_edit.addEventListener("click", function(){
-            id = user.id;
-            let text = user.text;
-            getText(text);
+            if( getuser === "sinet" && getpassword ==="123" || getuser === "chanry" && getpassword === "456"){
+                id = user.id;
+                let text = user.text;
+                getText(text);
+            }
+            else if( user.username === getuser && user.password === getpassword ){
+                id = user.id;
+                let text = user.text;
+                getText(text);
+            }
+            else{
+                confirm ("cannot edit message! You can only eidt your message")
+            }
+            
         });
 
         //..............create element span for contain icon delete................//
         const span_delete = document.createElement('span');
         span_delete.className = "fa fa-trash ";
         span_delete.addEventListener("click", function(){
-            let idDelete = user.id;
-            deleteMessage(idDelete);
+
+            if( getuser === "sinet" && getpassword ==="123" || getuser === "chanry" && getpassword === "456"){
+                let idDelete = user.id;
+                deleteMessage(idDelete);
+            }
+            else if( user.username === getuser && user.password === getpassword ){
+                let idDelete = user.id;
+                deleteMessage(idDelete);
+            }
+            else{
+                confirm ("cannot delete message! You can only delete your message");
+            }
+            
         });
         
-
         //.............create element span for contain icon quote.................//
         const span_quote = document.createElement('span');
         span_quote.className = "fa fa-quote-left ";
 
-        //................append all spans into the fieldset................//
         img.appendChild(span_img);
         fieldset.appendChild(img);
+        fieldset.appendChild(div_online);
         fieldset.appendChild(span_text);
         fieldset.appendChild(span_edit);
         fieldset.appendChild(span_delete);
         fieldset.appendChild(span_quote);
         fieldset.style.backgroundColor = user.color;
-
         div.appendChild(span_time);
         div.appendChild(fieldset);
         new_user_list.appendChild(div);
         content.appendChild(new_user_list);
-       
 
     }
 
     //.................clear value .....................//
     bold = "";
     italic = "";
-    
-
-
 }
 
+//.........create empty object for store all value.................//
+let User = {};
+let italic = "";
+let bold = "";
 let id = 0;
 //.............get text when click on button update ....................//
 function getText(message){
@@ -136,13 +166,11 @@ function updateMessage(){
     showElement(btnupdate, false);
     showElement(btnsend, true);
     
-
 }
 
 //...................button update.....................//
 const btnupdate = document.querySelector("#update_message");
 btnupdate.addEventListener("click", updateMessage);
-
 
 //................delete message...................//
 function deleteMessage(id) {
@@ -150,7 +178,6 @@ function deleteMessage(id) {
     // const url = "http://localhost:5000/users/"+ id;
     axios.delete(url).then(displayUser);
 }
-
 
 // .....................show and hide element .........................//
 const sex = document.querySelector("#sex");
@@ -160,7 +187,6 @@ const colorId = document.querySelector("#color");
 const register = document.querySelector(".register");
 const user_login = document.querySelector(".user_login");
 const loginBtn = document.querySelector(".login");
-
 
 function showElement(element, isShow) {
     if (isShow) {
@@ -182,8 +208,6 @@ function buttonSignUp(event) {
     showElement(containerDiv, false);
     showElement(user_login, false);
     showElement(loginBtn, false);
-
-
 };
 
 function buttonLogout(event){
@@ -198,8 +222,6 @@ function buttonLogout(event){
     showElement(colorId, false);
     showElement(btnsubmit, false);
     showElement(saveBtn, true);
-   
-
 }
 
 //...............button show and hide element..................//
@@ -209,7 +231,6 @@ logOutBtn.addEventListener("click",buttonLogout);
 //...............button show and hide element..................//
 const signUpBtn = document.querySelector(".sign_up");
 signUpBtn.addEventListener("click", buttonSignUp);
-
 
 //................function ask user can login or not...................//
 function Userlogin(response) {
@@ -232,15 +253,12 @@ function Userlogin(response) {
             showElement(logOutBtn, true);
             showElement(btnupdate, false)
 
-
             iscorrect = true;
             //................add value into object............//
-            User.username = user.username;
-            User.password = user.password;
+            localStorage.setItem("username", input_username);
+            localStorage.setItem("password",input_password);
             User.color = user.color;
             User.sex = user.sex;
-
-           
 
         }
     }
@@ -254,21 +272,21 @@ function buttonSave(e) {
     e.preventDefault();
     // const url = "http://localhost:5000/users";
     const url = "https://free-9chat.herokuapp.com/users";
-    axios.get(url).then(Userlogin).catch(console.log("error"));
-
-
+    axios.get(url)
+    .then(Userlogin)
+    .catch(function(error) {
+        console.log(error)
+    });
 };
 
 //...............button save user login......................//
 const saveBtn = document.querySelector("#save");
 saveBtn.addEventListener("click", buttonSave);
 
+//...........function submit form register................//
+function UserRigister(e) {
+    e.preventDefault();
 
-//..............function for user register................//
-function UserRegister(response) {
-    let users = response.data;
-
-    //...............get value from input....................//
     const input_username = document.querySelector("#username").value;
     const input_password = document.querySelector("#password").value;
     const input_color = document.querySelector("#color").value;
@@ -277,6 +295,17 @@ function UserRegister(response) {
     if (input_username === "") return confirm("input username cannot empty!!")
     if (input_password === "") return confirm("input password cannot empty!!")
 
+    let inputRadio = document.querySelectorAll("input[name=genderSelect]");
+    for (let radio of inputRadio){
+        if (radio.checked){
+            User.sex = radio.value
+        }
+    }
+    //...........set username and password into localstorage................//
+    localStorage.setItem("username", input_username);
+    localStorage.setItem("password",input_password);
+    User.color = input_color;
+    
     //..........show and hide element................//
     showElement(containerDiv, true);
     showElement(userLoginDiv, false);
@@ -284,43 +313,17 @@ function UserRegister(response) {
     showElement(loginBtn, false);
     showElement(logOutBtn, true);
 
-    let inputRadio = document.querySelectorAll("input[name=genderSelect]");
-    for (let radio of inputRadio){
-        if (radio.checked){
-            User.sex = radio.value;
-        }
-    }
-
-    //..........add value into object...............//
-    User.username = input_username;
-    User.password = input_password;
-    User.color = input_color;
-
-
-   
-
-    
-}
-
-
-
-//...........function submit form register................//
-function BtnSubmit(e) {
-    e.preventDefault();
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
-    axios.get(url).then(UserRegister);
-
 }
 
 //...............button submit form register.................//
 const btnsubmit = document.querySelector("#submit");
-btnsubmit.addEventListener("click", BtnSubmit);
+btnsubmit.addEventListener("click", UserRigister);
 
 
 //.......................send message........................//
 function sendMessage(e) {
-
+    const getuser =  localStorage.getItem("username");
+    const getpassword = localStorage.getItem("password");
     const text = document.querySelector("#textId").value;
     //.................audio...................//
     const x = document.getElementById("myAudio");
@@ -337,21 +340,19 @@ function sendMessage(e) {
     };
 
     time = d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear() + "-" + d.getHours() + ":" + d.getMinutes()+ ampm;
-
+    User.username = getuser;
+    User.password = getpassword;
     User.text = text;
     User.time = time;
     User.bold = bold;
     User.italic = italic;
-    console.log(User)
-
+  
     // const url = "http://localhost:5000/users";
     const url = "https://free-9chat.herokuapp.com/users";
     axios.post(url, User).then(displayUser);
 
     document.querySelector("#textId").value = "";
     disablebutton();
-
-
 }
 
 let enablebutton = () =>{
@@ -385,12 +386,6 @@ function loadData() {
     axios.get(url).then(displayUser);
 }
 
-//.........create empty object for store all value.................//
-let User = {};
-let italic = "";
-let bold = "";
-
-
 //........... text bold..............//
 function covertToBold() {
     bold = "B";
@@ -409,7 +404,6 @@ function covertToItalic() {
 
 const textItalic = document.querySelector("#italic");
 textItalic.addEventListener("click", covertToItalic);
-
 
 setInterval(loadData,3000);
 

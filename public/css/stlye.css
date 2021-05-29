@@ -270,3 +270,11 @@ fieldset img{
     display: flex;
     margin-left: 5px;
 }
+
+.online{
+    width: 10px;
+    height: 10px;
+    border-radius: 25px;
+    margin-top: 40px;
+    margin-left: -5px;
+}
