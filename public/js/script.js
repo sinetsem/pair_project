@@ -138,8 +138,8 @@ function getText(message){
 function updateMessage(){
     const text = document.querySelector("#textId").value;
     
-    // const url = "http://localhost:5000/users/"+id;
-    const url = "https://free-9chat.herokuapp.com/users/"+id;
+    const url = "http://localhost:5000/users/"+id;
+    // const url = "https://free-9chat.herokuapp.com/users/"+id;
    
     axios.put(url,{text: text}).then(displayUser);
 
@@ -154,8 +154,8 @@ btnupdate.addEventListener("click", updateMessage);
 
 //................delete message...................//
 function deleteMessage(id) {
-    const url = "https://free-9chat.herokuapp.com/users/" + id;
-    // const url = "http://localhost:5000/users/"+ id;
+    // const url = "https://free-9chat.herokuapp.com/users/" + id;
+    const url = "http://localhost:5000/users/"+ id;
     axios.delete(url).then(displayUser);
 }
 
@@ -231,6 +231,14 @@ function Userlogin(response) {
     for (let user of users) {
         if (user.username === input_username && user.password === input_password) {
 
+            //..........show and hide element................//
+            showElement(containerDiv, true);
+            showElement(userLoginDiv, false);
+            showElement(signUpBtn, false);
+            showElement(loginBtn, false);
+            showElement(logOutBtn, true);
+            showElement(btnupdate, false)
+
             iscorrect = true;
             //................add value into object............//
             localStorage.setItem("username", input_username);
@@ -248,21 +256,15 @@ function Userlogin(response) {
 //.............function save user login...............//
 function buttonSave(e) {
     e.preventDefault();
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url)
     .then(Userlogin)
     .catch(function(error) {
         console.log(error)
     });
 
-    //..........show and hide element................//
-    showElement(containerDiv, true);
-    showElement(userLoginDiv, false);
-    showElement(signUpBtn, false);
-    showElement(loginBtn, false);
-    showElement(logOutBtn, true);
-    showElement(btnupdate, false)
+    
 };
 
 //...............button save user login......................//
@@ -333,8 +335,8 @@ function sendMessage(e) {
     User.bold = bold;
     User.italic = italic;
   
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.post(url, User).then(displayUser);
 
     document.querySelector("#textId").value = "";
@@ -367,8 +369,8 @@ btnsend.addEventListener('click', sendMessage);
 
 //.......................load data.............................//
 function loadData() {
-    // const url = "http://localhost:5000/users";
-    const url = "https://free-9chat.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
+    // const url = "https://free-9chat.herokuapp.com/users";
     axios.get(url).then(displayUser);
 }
 
